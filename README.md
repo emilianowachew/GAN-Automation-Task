@@ -1,84 +1,218 @@
-**Jack Entertainment Automation Framework**
+# Jack Entertainment Automation Framework
 
-# Overview
-## This repository contains a Java-based UI automation framework developed for testing core user flows of the JackEntertainment (PlayJack) web application.
+## Overview
+
+This repository contains a **Java UI automation framework** developed to validate core user flows of the **JackEntertainment (PlayJack) web application**.
 
 The framework covers the following end-to-end scenarios:
-User Registration
-User Login
-Account Bonus History Verification
 
-The project is structured using the Page Object Model pattern and built with stability, clarity, and maintainability in mind.
+- **User Registration**
+- **User Login**
+- **Account Bonus History Verification**
 
-Technology Stack Overview
-Java (JDK 17+)
-Java was chosen for its strong ecosystem in test automation and long-term maintainability. It integrates seamlessly with Selenium and TestNG.
+The solution is built using the **Page Object Model (POM)** pattern.
 
-Selenium WebDriver
-Used for browser automation. Selenium provides direct control over Chrome and allows interaction with dynamic UI elements.
+---
 
-TestNG
-Used as the test framework for:
+## Technology Stack Overview
 
-Test structure and execution control
+### Java (JDK 17+)
 
-Assertions
+Java was selected as it is my strongest and most familiar programming language. It allows me to write clean, maintainable, and structured automation code, and integrates seamlessly with Selenium WebDriver and TestNG.
 
-Test configuration via XML
+### Selenium WebDriver
 
-Better reporting capabilities
+Used for browser automation and UI interaction. Selenium allows direct control of Chrome and supports dynamic web applications.
 
-Maven
+### TestNG
 
-Used as the build and dependency management tool. Maven allows:
+Used as the test framework to provide:
 
-Clean project structure
+- Clear and structured test execution
 
-Dependency control
+- Strong assertion support
 
-CI-friendly execution
+- XML-based suite configuration
 
-Command-line test execution
+- Built-in reporting capabilities
 
-ChromeDriver + WebDriverManager
+- Flexible test selection and grouping 
 
-WebDriverManager automatically manages browser driver versions, eliminating manual driver setup issues.
+### Maven
 
-Design Patterns Used
-Page Object Model (POM)
+Used as the build and dependency management tool. Maven provides:
 
-Each page or major UI component is represented by a dedicated class inside the pages package.
+- Clean project structure  
+- Dependency version control  
+- CLI-based execution  
+- CI-friendly configuration  
+
+### WebDriverManager
+
+Automatically manages browser driver versions, eliminating manual ChromeDriver setup issues.
+
+---
+
+## Design Patterns Used
+
+### Page Object Model (POM)
+
+Each page or major UI component is represented by a dedicated class inside the `pages` package.
 
 This ensures:
 
-Clear separation of concerns
+- Separation of concerns  
+- Reusable interaction methods  
+- Improved maintainability  
+- Reduced duplication  
+- Cleaner test classes  
 
-Reusable UI interaction methods
+### Base Test Layer
 
-Improved maintainability
+A `BaseTest` class centralizes:
 
-Reduced duplication
+- WebDriver setup  
+- Browser configuration  
+- URL initialization  
+- Teardown logic  
 
-Cleaner test classes
+This guarantees that all tests are **independent and isolated**.
 
-Base Test Layer
+### Explicit Wait Strategy
 
-A BaseTest class handles:
+The framework uses **explicit waits (WebDriverWait)** to:
 
-WebDriver setup and teardown
+- Handle dynamic UI rendering  
+- Prevent flaky behavior  
+- Ensure element visibility and clickability before interaction  
 
-Browser configuration
+---
 
-URL loading
+## Project Structure
 
-This ensures all tests run independently and cleanly.
+src  
+ ├── main  
+ │   └── java  
+ │       ├── core  
+ │       ├── pages  
+ │       └── utils  
+ └── test  
+     └── java  
+         ├── core  
+         └── tests  
 
-Explicit Wait Strategy
+Folder Responsibilities:
 
-The framework uses explicit waits via WebDriverWait to:
+- **core** – WebDriver configuration and base test logic  
+- **pages** – Page Object classes  
+- **utils** – Configuration and test data  
+- **tests** – Test cases for each user flow  
 
-Handle dynamic React rendering
+---
 
-Avoid flaky tests
+## Setup Instructions
 
-Ensure element visibility and clickability before interaction
+### 1. Prerequisites
+
+Ensure the following are installed:
+
+- **Java 17+**  
+- **Maven**  
+- **Git**  
+- **Google Chrome (latest version)**  
+
+Verify installations:
+
+java -version  
+mvn -version  
+git --version  
+
+---
+
+### 2. Clone the Repository
+
+git clone https://github.com/emilianowachew/GAN-Automation-Task.git
+cd GAN-Automation-Task
+
+---
+
+### 3. Install Dependencies
+
+mvn clean install  
+
+---
+
+## Test Execution Guide
+
+### Run All Tests
+
+mvn clean test  
+
+### Run Individual Test Classes
+
+mvn -Dtest=LoginTest test  
+mvn -Dtest=RegistrationTest test  
+mvn -Dtest=BonusHistoryTest test  
+
+---
+
+## Test Coverage
+
+### Registration Flow
+
+- Click **Sign Up**  
+- Accept cookies  
+- Enter valid username (6–16 characters)  
+- Enter valid email  
+- Enter password (minimum 6 characters, at least one letter and one digit)  
+- Accept **Terms and Conditions**  
+- Verify redirect to `registrationSuccess=true`  
+- Validate presence of **"Let's start"** button  
+
+---
+
+### Login Flow
+
+- Accept cookies  
+- Enter valid credentials  
+- Submit login form  
+- Verify successful login via **Social XP Wheel visibility**  
+
+---
+
+### Bonus History Flow
+
+- Login successfully  
+- Open Account Menu  
+- Navigate to **Account History**  
+- Open **BONUS** tab  
+- Verify winnings value **5,000**  
+- Verify description **Registration - Endless**  
+
+---
+
+## Stability Considerations
+
+The framework includes several stability enhancements:
+
+- Chrome password manager and leak detection popups are disabled via **ChromeOptions**  
+- Explicit waits are used for dynamic elements  
+- Retry logic implemented for header menu interaction  
+- Tests are fully independent  
+- No test relies on execution order  
+
+---
+
+## CI Readiness
+
+The project is Maven-based and can be executed in CI environments using:
+
+mvn clean test  
+
+Execution parameters (browser, headless mode, credentials) can be configured via system properties, making the framework flexible for pipeline integration.
+
+---
+
+## Author
+
+Developed as part of an automation task submission.
