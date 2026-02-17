@@ -1,7 +1,7 @@
 **Jack Entertainment Automation Framework**
 
-#Overview
-##This repository contains a Java-based UI automation framework developed for testing core user flows of the JackEntertainment (PlayJack) web application.
+# Overview
+## This repository contains a Java-based UI automation framework developed for testing core user flows of the JackEntertainment (PlayJack) web application.
 
 The framework covers the following end-to-end scenarios:
 User Registration
